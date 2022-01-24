@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{68BE7C2C-237E-417D-BB70-A82A1F1BBB7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFlashCards.WebApi", "src\MyFlashCards.WebApi\MyFlashCards.WebApi.csproj", "{5624C43B-520F-4E8D-AE40-B710E8D71CED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFlashCards.Domain", "src\MyFlashCards.Domain\MyFlashCards.Domain.csproj", "{067B1080-A5CD-48A7-8725-AC9DE241E996}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFlashCards.Application", "src\MyFlashCards.Application\MyFlashCards.Application.csproj", "{1A614C20-59D8-4F3A-984A-11811E2CC085}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFlashCards.Infrastructure", "src\MyFlashCards.Infrastructure\MyFlashCards.Infrastructure.csproj", "{7824CC1C-5D5E-4CC6-BDDE-FD418C98BF63}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D07FD851-C976-47AF-AC8E-01BF9001D8BE}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5624C43B-520F-4E8D-AE40-B710E8D71CED} = {68BE7C2C-237E-417D-BB70-A82A1F1BBB7C}
+		{067B1080-A5CD-48A7-8725-AC9DE241E996} = {68BE7C2C-237E-417D-BB70-A82A1F1BBB7C}
+		{1A614C20-59D8-4F3A-984A-11811E2CC085} = {68BE7C2C-237E-417D-BB70-A82A1F1BBB7C}
+		{7824CC1C-5D5E-4CC6-BDDE-FD418C98BF63} = {68BE7C2C-237E-417D-BB70-A82A1F1BBB7C}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5624C43B-520F-4E8D-AE40-B710E8D71CED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5624C43B-520F-4E8D-AE40-B710E8D71CED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5624C43B-520F-4E8D-AE40-B710E8D71CED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5624C43B-520F-4E8D-AE40-B710E8D71CED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{067B1080-A5CD-48A7-8725-AC9DE241E996}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{067B1080-A5CD-48A7-8725-AC9DE241E996}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{067B1080-A5CD-48A7-8725-AC9DE241E996}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{067B1080-A5CD-48A7-8725-AC9DE241E996}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A614C20-59D8-4F3A-984A-11811E2CC085}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A614C20-59D8-4F3A-984A-11811E2CC085}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A614C20-59D8-4F3A-984A-11811E2CC085}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A614C20-59D8-4F3A-984A-11811E2CC085}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7824CC1C-5D5E-4CC6-BDDE-FD418C98BF63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7824CC1C-5D5E-4CC6-BDDE-FD418C98BF63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7824CC1C-5D5E-4CC6-BDDE-FD418C98BF63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7824CC1C-5D5E-4CC6-BDDE-FD418C98BF63}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
