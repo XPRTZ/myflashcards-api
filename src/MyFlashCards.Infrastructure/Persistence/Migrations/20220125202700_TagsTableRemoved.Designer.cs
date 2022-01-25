@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyFlashCards.Infrastructure.Persistence;
 
@@ -11,9 +12,10 @@ using MyFlashCards.Infrastructure.Persistence;
 namespace MyFlashCards.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(FlashCardsContext))]
-    partial class FlashCardsContextModelSnapshot : ModelSnapshot
+    [Migration("20220125202700_TagsTableRemoved")]
+    partial class TagsTableRemoved
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

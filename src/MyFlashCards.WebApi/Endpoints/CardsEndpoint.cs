@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyFlashCards.Application.Interfaces;
 using MyFlashCards.Domain;
 using MyFlashCards.Domain.Models;
 
@@ -18,7 +19,7 @@ public class CardsEndpoint : IEndpoint
             .ProducesErrorCodes();
 
         app.MapPut("/cards/{id}", UpdateCard)
-            .Produces(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status204NoContent)
             .ProducesErrorCodes();
 
         app.MapDelete("/cards/{id}", DeleteCard)
@@ -26,15 +27,31 @@ public class CardsEndpoint : IEndpoint
             .ProducesErrorCodes();
     }
 
-    private async Task<IResult> GetCards(CancellationToken cancellationToken) => 
-        throw new NotImplementedException();
+    private async Task<IResult> GetCards(ICardRepository repository, CancellationToken cancellationToken)
+    {
+        var cards = await repository.Get(cancellationToken);
+        
+        return Results.Ok(cards);
+    }
 
-    private async Task<IResult> AddCard([FromBody] Card card, CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
+    private async Task<IResult> AddCard([FromBody] Card card, ICardRepository repository, CancellationToken cancellationToken)
+    {
+        await repository.Add(card, cancellationToken);
+        
+        return Results.NoContent();
+    }
 
-    private async Task<IResult> UpdateCard(Guid id, [FromBody] Card card, CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
+    private async Task<IResult> UpdateCard(Guid id, [FromBody] Card card, ICardRepository repository, CancellationToken cancellationToken)
+    {
+        await repository.Update(id, card, cancellationToken);
+        
+        return Results.NoContent();
+    }
 
-    private async Task<IResult> DeleteCard(Guid id, CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
+    private async Task<IResult> DeleteCard(Guid id, ICardRepository repository, CancellationToken cancellationToken)
+    {
+        await repository.Delete(id, cancellationToken);
+        
+        return Results.NoContent();
+    }
 }

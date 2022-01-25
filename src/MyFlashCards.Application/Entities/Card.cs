@@ -13,6 +13,6 @@ public class Card
     
     [StringLength(500)]
     public string Back { get; set; } = default!;
-    
-    public IEnumerable<Tag> Tags { get; set; } = Enumerable.Empty<Tag>();
+
+    public IEnumerable<string> Tags { get; set; } = Enumerable.Empty<string>();
 }
