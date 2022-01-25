@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyFlashCards.Domain;
+using MyFlashCards.Domain.Models;
 
 namespace MyFlashCards.WebApi.Endpoints;
 

@@ -1,9 +1,12 @@
+using MyFlashCards.Infrastructure;
 using MyFlashCards.WebApi.Endpoints;
 using MyFlashCards.WebApi.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
+
+services.AddInfrastructure(builder.Configuration);
 
 services.AddCors(options => options.AddPolicy("*", policyBuilder => policyBuilder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 

@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\MyFlashCards.Infrastructure\MyFlashCards.Infrastructure.csproj" />
+      <ProjectReference Include="..\MyFlashCards.Infrastructure\MyFlashCards.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
