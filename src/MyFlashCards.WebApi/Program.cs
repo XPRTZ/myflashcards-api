@@ -13,6 +13,7 @@ services.AddInfrastructure(builder.Configuration);
 services.AddCors(options => options.AddPolicy("*", policyBuilder => policyBuilder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
 services.AddEndpoints(typeof(CardsEndpoint));
+services.AddEndpoints(typeof(TestsEndpoint));
 
 services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>

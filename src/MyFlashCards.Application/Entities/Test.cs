@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MyFlashCards.Domain.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyFlashCards.Application.Entities;
@@ -9,6 +10,6 @@ public class Test
     public Guid Id { get; set; }
     
     public Prompt Prompt { get; set; }
-    
-    public IEnumerable<Question> Questions { get; set; } = Enumerable.Empty<Question>();
+
+    public ICollection<Question> Questions { get; set; } = default!;
 }

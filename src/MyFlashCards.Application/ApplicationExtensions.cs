@@ -9,6 +9,7 @@ public static class ApplicationExtensions
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddScoped<ICardRepository, CardRepository>();
+        services.AddScoped<ITestRepository, TestRepository>();
 
         return services;
     }
