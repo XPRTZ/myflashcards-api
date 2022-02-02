@@ -15,6 +15,8 @@ public class FlashCardsContext : DbContext, IFlashCardsContext
     
     public DbSet<Card> Cards => Set<Card>();
 
+    public DbSet<Test> Tests => Set<Test>();
+
     public Task<int> SaveChanges(CancellationToken cancellationToken = default) =>
         base.SaveChangesAsync(cancellationToken);
 
@@ -27,5 +29,9 @@ public class FlashCardsContext : DbContext, IFlashCardsContext
             .HasConversion(
                 v => string.Join(',', v.Select(x => x.ToUpper(CultureInfo.InvariantCulture))),
                 v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
+
+        modelBuilder.Entity<Test>()
+            .Property(e => e.Prompt)
+            .HasConversion<string>();
     }
 }
