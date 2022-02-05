@@ -27,28 +27,28 @@ public class TestsEndpoint : IEndpoint
             .ProducesErrorCodes();
     }
 
-    private async Task<IResult> GetTest(Guid id, ITestRepository repository, CancellationToken cancellationToken)
+    private IResult GetTest(Guid id, ITestReadRepository repository)
     {
-        var test = await repository.Get(id, cancellationToken);
+        var test = repository.Get(id);
         
         return Results.Ok(test);
     }
 
-    private async Task<IResult> AddTest([FromBody] CreateTestRequest request, ITestRepository repository, CancellationToken cancellationToken)
+    private async Task<IResult> AddTest([FromBody] CreateTestRequest request, ITestWriteRepository repository, CancellationToken cancellationToken)
     {
         await repository.Add(request, cancellationToken);
         
         return Results.NoContent();
     }
 
-    private async Task<IResult> UpdateTest(Guid id, [FromBody] Test test, ITestRepository repository, CancellationToken cancellationToken)
+    private async Task<IResult> UpdateTest(Guid id, [FromBody] Test test, ITestWriteRepository repository, CancellationToken cancellationToken)
     {
         await repository.Update(id, test, cancellationToken);
         
         return Results.NoContent();
     }
 
-    private async Task<IResult> DeleteTest(Guid id, ITestRepository repository, CancellationToken cancellationToken)
+    private async Task<IResult> DeleteTest(Guid id, ITestWriteRepository repository, CancellationToken cancellationToken)
     {
         await repository.Delete(id, cancellationToken);
         

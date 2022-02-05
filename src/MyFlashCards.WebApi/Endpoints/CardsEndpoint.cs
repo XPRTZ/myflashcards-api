@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyFlashCards.Application.Interfaces;
-using MyFlashCards.Domain;
 using MyFlashCards.Domain.Models;
 
 namespace MyFlashCards.WebApi.Endpoints;
@@ -27,28 +26,28 @@ public class CardsEndpoint : IEndpoint
             .ProducesErrorCodes();
     }
 
-    private async Task<IResult> GetCards(ICardRepository repository, CancellationToken cancellationToken)
+    private IResult GetCards(ICardReadRepository repository)
     {
-        var cards = await repository.Get(cancellationToken);
+        var cards = repository.Get();
         
         return Results.Ok(cards);
     }
 
-    private async Task<IResult> AddCard([FromBody] Card card, ICardRepository repository, CancellationToken cancellationToken)
+    private async Task<IResult> AddCard([FromBody] Card card, ICardWriteRepository repository, CancellationToken cancellationToken)
     {
         await repository.Add(card, cancellationToken);
         
         return Results.NoContent();
     }
 
-    private async Task<IResult> UpdateCard(Guid id, [FromBody] Card card, ICardRepository repository, CancellationToken cancellationToken)
+    private async Task<IResult> UpdateCard(Guid id, [FromBody] Card card, ICardWriteRepository repository, CancellationToken cancellationToken)
     {
         await repository.Update(id, card, cancellationToken);
         
         return Results.NoContent();
     }
 
-    private async Task<IResult> DeleteCard(Guid id, ICardRepository repository, CancellationToken cancellationToken)
+    private async Task<IResult> DeleteCard(Guid id, ICardWriteRepository repository, CancellationToken cancellationToken)
     {
         await repository.Delete(id, cancellationToken);
         

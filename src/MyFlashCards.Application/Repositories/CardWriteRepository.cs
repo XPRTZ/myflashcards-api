@@ -1,28 +1,14 @@
-﻿using Microsoft.VisualBasic;
-using MyFlashCards.Application.Entities;
-using MyFlashCards.Application.Exceptions;
+﻿using MyFlashCards.Application.Exceptions;
 using MyFlashCards.Application.Interfaces;
-using System.Globalization;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using Card = MyFlashCards.Domain.Models.Card;
 
 namespace MyFlashCards.Application.Repositories;
 
-internal class CardRepository : ICardRepository
+internal class CardWriteRepository : ICardWriteRepository
 {
     private readonly IFlashCardsContext _context;
 
-    public CardRepository(IFlashCardsContext context) => _context = context;
-    
-    public Task<IEnumerable<Card>> Get(CancellationToken cancellationToken = default)
-    {
-        var cards = _context.Cards
-            .Select(x => new Card(x.Id, x.Front, x.Back, x.Tags))
-            .ToList();
-
-        return Task.FromResult(cards as IEnumerable<Card>);
-    }
+    public CardWriteRepository(IFlashCardsContext context) => _context = context;
 
     public async Task Add(Card card, CancellationToken cancellationToken = default)
     {
