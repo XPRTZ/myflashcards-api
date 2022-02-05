@@ -2,6 +2,6 @@
 
 public enum Prompt
 {
-    Front,
+    Front = 1,
     Back
 }

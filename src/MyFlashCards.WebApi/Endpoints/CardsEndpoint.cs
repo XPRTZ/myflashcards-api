@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MyFlashCards.Application.Interfaces;
-using MyFlashCards.Domain;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using MyFlashCards.Application.Cards.Commands;
+using MyFlashCards.Application.Cards.Queries;
 using MyFlashCards.Domain.Models;
 
 namespace MyFlashCards.WebApi.Endpoints;
@@ -27,30 +28,30 @@ public class CardsEndpoint : IEndpoint
             .ProducesErrorCodes();
     }
 
-    private async Task<IResult> GetCards(ICardRepository repository, CancellationToken cancellationToken)
+    private async Task<IResult> GetCards(IMediator mediator, CancellationToken cancellationToken)
     {
-        var cards = await repository.Get(cancellationToken);
+        var cards = await mediator.Send(new GetCards(), cancellationToken);
         
         return Results.Ok(cards);
     }
 
-    private async Task<IResult> AddCard([FromBody] Card card, ICardRepository repository, CancellationToken cancellationToken)
+    private async Task<IResult> AddCard([FromBody] Card card, IMediator mediator, CancellationToken cancellationToken)
     {
-        await repository.Add(card, cancellationToken);
+        await mediator.Send(new AddCard(card), cancellationToken);
         
         return Results.NoContent();
     }
 
-    private async Task<IResult> UpdateCard(Guid id, [FromBody] Card card, ICardRepository repository, CancellationToken cancellationToken)
+    private async Task<IResult> UpdateCard(Guid id, [FromBody] Card card, IMediator mediator, CancellationToken cancellationToken)
     {
-        await repository.Update(id, card, cancellationToken);
+        await mediator.Send(new UpdateCard(id, card), cancellationToken);
         
         return Results.NoContent();
     }
 
-    private async Task<IResult> DeleteCard(Guid id, ICardRepository repository, CancellationToken cancellationToken)
+    private async Task<IResult> DeleteCard(Guid id, IMediator mediator, CancellationToken cancellationToken)
     {
-        await repository.Delete(id, cancellationToken);
+        await mediator.Send(new DeleteCard(id), cancellationToken);
         
         return Results.NoContent();
     }

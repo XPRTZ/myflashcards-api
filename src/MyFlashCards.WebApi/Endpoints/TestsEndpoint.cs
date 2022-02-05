@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using MyFlashCards.Application.Interfaces;
+using MyFlashCards.Application.Tests.Commands;
+using MyFlashCards.Application.Tests.Queries;
 using MyFlashCards.Domain.Models;
 using MyFlashCards.Domain.Requests;
 
@@ -27,30 +30,30 @@ public class TestsEndpoint : IEndpoint
             .ProducesErrorCodes();
     }
 
-    private async Task<IResult> GetTest(Guid id, ITestRepository repository, CancellationToken cancellationToken)
+    private async Task<IResult> GetTest(Guid id, IMediator mediator, CancellationToken cancellationToken)
     {
-        var test = await repository.Get(id, cancellationToken);
+        var test = await mediator.Send(new GetTest(id), cancellationToken);
         
         return Results.Ok(test);
     }
 
-    private async Task<IResult> AddTest([FromBody] CreateTestRequest request, ITestRepository repository, CancellationToken cancellationToken)
+    private async Task<IResult> AddTest([FromBody] CreateTestRequest request, IMediator mediator, CancellationToken cancellationToken)
     {
-        await repository.Add(request, cancellationToken);
+        await mediator.Send(new AddTest(request), cancellationToken);
         
         return Results.NoContent();
     }
 
-    private async Task<IResult> UpdateTest(Guid id, [FromBody] Test test, ITestRepository repository, CancellationToken cancellationToken)
+    private async Task<IResult> UpdateTest(Guid id, [FromBody] Test test, IMediator mediator, CancellationToken cancellationToken)
     {
-        await repository.Update(id, test, cancellationToken);
+        await mediator.Send(new UpdateTest(id, test), cancellationToken);
         
         return Results.NoContent();
     }
 
-    private async Task<IResult> DeleteTest(Guid id, ITestRepository repository, CancellationToken cancellationToken)
+    private async Task<IResult> DeleteTest(Guid id, IMediator mediator, CancellationToken cancellationToken)
     {
-        await repository.Delete(id, cancellationToken);
+        await mediator.Send(new DeleteTest(id), cancellationToken);
         
         return Results.NoContent();
     }
