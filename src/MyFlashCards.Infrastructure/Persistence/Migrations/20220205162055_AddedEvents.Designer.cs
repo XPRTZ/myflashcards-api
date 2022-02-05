@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyFlashCards.Infrastructure.Persistence;
 
@@ -11,9 +12,10 @@ using MyFlashCards.Infrastructure.Persistence;
 namespace MyFlashCards.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(FlashCardsContext))]
-    partial class FlashCardsContextModelSnapshot : ModelSnapshot
+    [Migration("20220205162055_AddedEvents")]
+    partial class AddedEvents
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,7 +45,7 @@ namespace MyFlashCards.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cards", (string)null);
+                    b.ToTable("Cards");
                 });
 
             modelBuilder.Entity("MyFlashCards.Application.Entities.Question", b =>
@@ -67,7 +69,7 @@ namespace MyFlashCards.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("TestId");
 
-                    b.ToTable("Question", (string)null);
+                    b.ToTable("Question");
                 });
 
             modelBuilder.Entity("MyFlashCards.Application.Entities.Test", b =>
@@ -81,7 +83,7 @@ namespace MyFlashCards.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tests", (string)null);
+                    b.ToTable("Tests");
                 });
 
             modelBuilder.Entity("MyFlashCards.Application.Events.EventBase", b =>
@@ -115,7 +117,7 @@ namespace MyFlashCards.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Events", (string)null);
+                    b.ToTable("Events");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("EventBase");
                 });

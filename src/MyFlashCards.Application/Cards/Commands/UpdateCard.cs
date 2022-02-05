@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 using MyFlashCards.Application.Cards.Validation;
+using MyFlashCards.Application.Events;
 using MyFlashCards.Application.Exceptions;
 using MyFlashCards.Application.Interfaces;
 using MyFlashCards.Domain.Models;
@@ -27,6 +28,8 @@ public class UpdateCardHandler : IRequestHandler<UpdateCard>
         entity.Back = card.Back;
         entity.Tags = card.Tags;
 
+        _context.Events.Add(new CardUpdatedEvent(request));
+        
         await _context.SaveChanges(cancellationToken);
 
         return Unit.Value;

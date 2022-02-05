@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
+using MyFlashCards.Application.Events;
 using MyFlashCards.Application.Exceptions;
 using MyFlashCards.Application.Interfaces;
 
@@ -22,6 +23,8 @@ public class DeleteCardHandler : IRequestHandler<DeleteCard>
             ?? throw new NotFoundException($"Card with id {id} could not be found");
 
         _context.Cards.Remove(entity);
+
+        _context.Events.Add(new CardDeletedEvent(request));
 
         await _context.SaveChanges(cancellationToken);
 

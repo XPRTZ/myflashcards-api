@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyFlashCards.Application.Entities;
+using MyFlashCards.Application.Events;
 using MyFlashCards.Application.Interfaces;
+using Newtonsoft.Json;
 using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace MyFlashCards.Infrastructure.Persistence;
 
@@ -16,6 +19,15 @@ public class FlashCardsContext : DbContext, IFlashCardsContext
     public DbSet<Card> Cards => Set<Card>();
 
     public DbSet<Test> Tests => Set<Test>();
+
+    public DbSet<EventBase> Events => Set<EventBase>();
+    public DbSet<CardCreatedEvent> CardCreatedEvents => Set<CardCreatedEvent>();
+    public DbSet<CardDeletedEvent> CardDeletedEvents => Set<CardDeletedEvent>();
+    public DbSet<CardUpdatedEvent> CardUpdatedEvents => Set<CardUpdatedEvent>();
+    public DbSet<TestCreatedEvent> TestCreatedEvents => Set<TestCreatedEvent>();
+    public DbSet<TestDeletedEvent> TestDeletedEvents => Set<TestDeletedEvent>();
+    public DbSet<TestUpdatedEvent> TestUpdatedEvents => Set<TestUpdatedEvent>();
+
 
     public Task<int> SaveChanges(CancellationToken cancellationToken = default) =>
         base.SaveChangesAsync(cancellationToken);
@@ -33,5 +45,9 @@ public class FlashCardsContext : DbContext, IFlashCardsContext
         modelBuilder.Entity<Test>()
             .Property(e => e.Prompt)
             .HasConversion<string>();
+
+        modelBuilder.Entity<EventBase>()
+            .Property(e => e.Timestamp)
+            .HasDefaultValueSql("GETDATE()");
     }
 }

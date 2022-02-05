@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using MyFlashCards.Application.Events;
 using MyFlashCards.Application.Exceptions;
 using MyFlashCards.Application.Interfaces;
 using MyFlashCards.Application.Tests.Validation;
@@ -34,6 +35,8 @@ public class UpdateTestHandler : IRequestHandler<UpdateTest>
             question.Correct = correct;
         }
 
+        _context.Events.Add(new TestUpdatedEvent(request));
+        
         await _context.SaveChanges(cancellationToken);
 
         return Unit.Value;

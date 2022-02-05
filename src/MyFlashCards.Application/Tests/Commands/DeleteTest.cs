@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
+using MyFlashCards.Application.Events;
 using MyFlashCards.Application.Exceptions;
 using MyFlashCards.Application.Interfaces;
 
@@ -22,6 +23,8 @@ public class DeleteTestHandler : IRequestHandler<DeleteTest>
             ?? throw new NotFoundException($"Test with id {id} could not be found");
 
         _context.Tests.Remove(entity);
+
+        _context.Events.Add(new TestDeletedEvent(request));
 
         await _context.SaveChanges(cancellationToken);
 

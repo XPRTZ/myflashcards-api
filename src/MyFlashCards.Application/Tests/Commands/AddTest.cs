@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
+using MyFlashCards.Application.Events;
 using MyFlashCards.Application.Extensions;
 using MyFlashCards.Application.Interfaces;
 using MyFlashCards.Application.Tests.Validation;
@@ -31,6 +32,8 @@ public class AddTestHandler : IRequestHandler<AddTest>
         var test = new Entities.Test {Id = id, Prompt = prompt, Questions = questions.ToList()};
 
         _context.Tests.Add(test);
+
+        _context.Events.Add(new TestCreatedEvent(request));
 
         await _context.SaveChanges(cancellationToken);
 
