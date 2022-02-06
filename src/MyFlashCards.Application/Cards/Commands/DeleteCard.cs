@@ -3,6 +3,7 @@ using MediatR;
 using MyFlashCards.Application.Events;
 using MyFlashCards.Application.Exceptions;
 using MyFlashCards.Application.Interfaces;
+using MyFlashCards.Domain.Models;
 
 namespace MyFlashCards.Application.Cards.Commands;
 
@@ -10,21 +11,22 @@ public record DeleteCard(Guid Id) : IRequest;
 
 public class DeleteCardHandler : IRequestHandler<DeleteCard>
 {
-    private IFlashCardsContext _context;
+    private readonly IFlashCardsContext _context;
 
     public DeleteCardHandler(IFlashCardsContext context) => _context = context;
 
     public async Task<Unit> Handle(DeleteCard request, CancellationToken cancellationToken)
     {
-        var id = request.Id;
+        var cardExits = _context.Events.ToList()
+            .OfType<CardEvent>()
+            .Any(x => x.StreamId == request.Id);
 
-        var entity =
-            _context.Cards.SingleOrDefault(x => x.Id == id)
-            ?? throw new NotFoundException($"Card with id {id} could not be found");
+        if (!cardExits)
+        {
+            throw new NotFoundException($"Card with id {request.Id} could not be found");
+        }
 
-        _context.Cards.Remove(entity);
-
-        _context.Events.Add(new CardDeletedEvent(request));
+        _context.Events.Add(new CardDeletedEvent(new Card(request.Id, string.Empty, string.Empty, Enumerable.Empty<string>())));
 
         await _context.SaveChanges(cancellationToken);
 

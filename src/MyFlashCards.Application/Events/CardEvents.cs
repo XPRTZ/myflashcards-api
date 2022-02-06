@@ -1,43 +1,47 @@
-﻿using MyFlashCards.Application.Cards.Commands;
+﻿using MyFlashCards.Domain.Models;
 
 namespace MyFlashCards.Application.Events;
 
-public class CardCreatedEvent : Event<AddCard>
+public class CardEvent : Event<Card>
+{
+}
+
+public class CardCreatedEvent : CardEvent
 {
     public CardCreatedEvent()
     {
         
     }
     
-    public CardCreatedEvent(AddCard data)
-    {
-        Data = data;
-        StreamId = data.Card.Id;
-    }
-}
-
-public class CardUpdatedEvent : Event<UpdateCard>
-{
-    public CardUpdatedEvent()
-    {
-        
-    }
-    
-    public CardUpdatedEvent(UpdateCard data)
+    public CardCreatedEvent(Card data)
     {
         Data = data;
         StreamId = data.Id;
     }
 }
 
-public class CardDeletedEvent : Event<DeleteCard>
+public class CardUpdatedEvent : CardEvent
+{
+    public CardUpdatedEvent()
+    {
+        
+    }
+    
+    public CardUpdatedEvent(Card data)
+    {
+        Data = data;
+        StreamId = data.Id;
+    }
+}
+
+public class CardDeletedEvent : CardEvent
 {
     public CardDeletedEvent()
     {
         
     }
     
-    public CardDeletedEvent(DeleteCard data)
+    public CardDeletedEvent(Card data)
     {
         Data = data;
         StreamId = data.Id;

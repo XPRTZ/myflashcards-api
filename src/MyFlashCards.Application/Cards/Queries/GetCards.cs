@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using MyFlashCards.Application.Events;
 using MyFlashCards.Application.Interfaces;
 using MyFlashCards.Domain.Models;
 
@@ -14,10 +15,16 @@ public class GetCardsHandler : IRequestHandler<GetCards, IEnumerable<Card>>
 
     public Task<IEnumerable<Card>> Handle(GetCards request, CancellationToken cancellationToken)
     {
-        var cards = _context.Cards
-            .Select(x => new Card(x.Id, x.Front, x.Back, x.Tags))
-            .ToList();
+        var cardEvents = _context.Events.ToList()
+            .OfType<CardEvent>()
+            .OrderBy(x => x.StreamPosition)
+            .GroupBy(x => x.StreamId);
 
-        return Task.FromResult(cards as IEnumerable<Card>);
+        var cards = cardEvents
+            .Select(CardAggregate.Load)
+            .Where(x => !x.IsDeleted)
+            .Select(x => new Card(x.Id, x.Front, x.Back, x.Tags));
+
+        return Task.FromResult(cards);
     }
 }

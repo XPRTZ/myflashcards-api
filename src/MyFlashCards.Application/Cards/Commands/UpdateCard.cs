@@ -12,23 +12,22 @@ public record UpdateCard(Guid Id, Card Card) : IRequest;
 
 public class UpdateCardHandler : IRequestHandler<UpdateCard>
 {
-    private IFlashCardsContext _context;
+    private readonly IFlashCardsContext _context;
 
     public UpdateCardHandler(IFlashCardsContext context) => _context = context;
 
     public async Task<Unit> Handle(UpdateCard request, CancellationToken cancellationToken)
     {
-        var (id, card) = request;
+        var cardExits = _context.Events.ToList()
+            .OfType<CardEvent>()
+            .Any(x => x.StreamId == request.Id);
 
-        var entity =
-            _context.Cards.SingleOrDefault(x => x.Id == id)
-            ?? throw new NotFoundException($"Card with id {id} could not be found");
+        if (!cardExits)
+        {
+            throw new NotFoundException($"Card with id {request.Id} could not be found");
+        }
 
-        entity.Front = card.Front;
-        entity.Back = card.Back;
-        entity.Tags = card.Tags;
-
-        _context.Events.Add(new CardUpdatedEvent(request));
+        _context.Events.Add(new CardUpdatedEvent(request.Card with {Id = request.Id}));
         
         await _context.SaveChanges(cancellationToken);
 

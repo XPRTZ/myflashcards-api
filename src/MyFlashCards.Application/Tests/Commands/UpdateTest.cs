@@ -13,7 +13,7 @@ public record UpdateTest(Guid Id, Test Test) : IRequest;
 
 public class UpdateTestHandler : IRequestHandler<UpdateTest>
 {
-    private IFlashCardsContext _context;
+    private readonly IFlashCardsContext _context;
 
     public UpdateTestHandler(IFlashCardsContext context) => _context = context;
 
@@ -21,22 +21,17 @@ public class UpdateTestHandler : IRequestHandler<UpdateTest>
     {
         var (id, test) = request;
 
-        var entity =
-            _context.Tests
-                .Include(x => x.Questions)
-                .ThenInclude(x => x.Card)
-                .SingleOrDefault(x => x.Id == id)
-            ?? throw new NotFoundException($"Test with id {id} could not be found");
+        var testExits = _context.Events.ToList()
+            .OfType<TestEvent>()
+            .Any(x => x.StreamId == id);
 
-        entity.Prompt = test.Prompt;
-        foreach (var (card, correct) in test.Questions)
+        if (!testExits)
         {
-            var question = entity.Questions.Single(q => q.Card.Id == card.Id);
-            question.Correct = correct;
+            throw new NotFoundException($"Test with id {id} could not be found");
         }
-
-        _context.Events.Add(new TestUpdatedEvent(request));
         
+        _context.Events.Add(new TestUpdatedEvent(request.Test with {Id = request.Id}));
+
         await _context.SaveChanges(cancellationToken);
 
         return Unit.Value;

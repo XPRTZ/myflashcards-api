@@ -1,43 +1,48 @@
 ﻿using MyFlashCards.Application.Tests.Commands;
+using MyFlashCards.Domain.Models;
 
 namespace MyFlashCards.Application.Events;
 
-public class TestCreatedEvent : Event<AddTest>
+public class TestEvent : Event<Test>
+{
+}
+
+public class TestCreatedEvent : TestEvent
 {
     public TestCreatedEvent()
     {
         
     }
     
-    public TestCreatedEvent(AddTest data)
-    {
-        Data = data;
-        StreamId = data.Request.Id;
-    }
-}
-
-public class TestUpdatedEvent : Event<UpdateTest>
-{
-    public TestUpdatedEvent()
-    {
-        
-    }
-    
-    public TestUpdatedEvent(UpdateTest data)
+    public TestCreatedEvent(Test data)
     {
         Data = data;
         StreamId = data.Id;
     }
 }
 
-public class TestDeletedEvent : Event<DeleteTest>
+public class TestUpdatedEvent : TestEvent
+{
+    public TestUpdatedEvent()
+    {
+        
+    }
+    
+    public TestUpdatedEvent(Test data)
+    {
+        Data = data;
+        StreamId = data.Id;
+    }
+}
+
+public class TestDeletedEvent : TestEvent
 {
     public TestDeletedEvent()
     {
         
     }
     
-    public TestDeletedEvent(DeleteTest data)
+    public TestDeletedEvent(Test data)
     {
         Data = data;
         StreamId = data.Id;

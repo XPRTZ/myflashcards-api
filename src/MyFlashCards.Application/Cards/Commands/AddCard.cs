@@ -12,26 +12,22 @@ public record AddCard(Card Card) : IRequest;
 
 public class AddCardHandler : IRequestHandler<AddCard>
 {
-    private IFlashCardsContext _context;
+    private readonly IFlashCardsContext _context;
 
     public AddCardHandler(IFlashCardsContext context) => _context = context;
 
     public async Task<Unit> Handle(AddCard request, CancellationToken cancellationToken)
     {
-        var card = request.Card;
-
-        var entity = _context.Cards.SingleOrDefault(x => x.Id == card.Id);
-
-        if (entity != null)
+        var cardExits = _context.Events.ToList()
+            .OfType<CardEvent>()
+            .Any(x => x.StreamId == request.Card.Id);
+        
+        if (cardExits)
         {
-            throw new AlreadyExistsException(nameof(Card), card.Id);
+            throw new AlreadyExistsException(nameof(Card), request.Card.Id);
         }
 
-        entity = new Entities.Card {Id = card.Id, Front = card.Front, Back = card.Back, Tags = card.Tags};
-
-        _context.Cards.Add(entity);
-
-        _context.Events.Add(new CardCreatedEvent(request));
+        _context.Events.Add(new CardCreatedEvent(request.Card));
 
         await _context.SaveChanges(cancellationToken);
 
