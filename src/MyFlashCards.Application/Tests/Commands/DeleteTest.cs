@@ -9,7 +9,7 @@ public record DeleteTest(Guid Id) : IRequest;
 
 public class DeleteTestHandler : IRequestHandler<DeleteTest>
 {
-    private IFlashCardsContext _context;
+    private readonly IFlashCardsContext _context;
 
     public DeleteTestHandler(IFlashCardsContext context) => _context = context;
 

@@ -11,7 +11,7 @@ public record AddTest(CreateTestRequest Request) : IRequest;
 
 public class AddTestHandler : IRequestHandler<AddTest>
 {
-    private IFlashCardsContext _context;
+    private readonly IFlashCardsContext _context;
 
     public AddTestHandler(IFlashCardsContext context) => _context = context;
 

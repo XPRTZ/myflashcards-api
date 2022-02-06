@@ -12,7 +12,7 @@ public record UpdateTest(Guid Id, Test Test) : IRequest;
 
 public class UpdateTestHandler : IRequestHandler<UpdateTest>
 {
-    private IFlashCardsContext _context;
+    private readonly IFlashCardsContext _context;
 
     public UpdateTestHandler(IFlashCardsContext context) => _context = context;
 

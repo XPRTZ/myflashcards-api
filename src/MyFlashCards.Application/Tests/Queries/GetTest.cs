@@ -11,7 +11,7 @@ public record GetTest(Guid Id) : IRequest<Test>;
 
 public class GetTestHandler : IRequestHandler<GetTest, Test>
 {
-    private IFlashCardsContext _context;
+    private readonly IFlashCardsContext _context;
 
     public GetTestHandler(IFlashCardsContext context) => _context = context;
 

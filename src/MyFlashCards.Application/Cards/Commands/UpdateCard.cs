@@ -11,7 +11,7 @@ public record UpdateCard(Guid Id, Card Card) : IRequest;
 
 public class UpdateCardHandler : IRequestHandler<UpdateCard>
 {
-    private IFlashCardsContext _context;
+    private readonly IFlashCardsContext _context;
 
     public UpdateCardHandler(IFlashCardsContext context) => _context = context;
 

@@ -11,7 +11,7 @@ public record AddCard(Card Card) : IRequest;
 
 public class AddCardHandler : IRequestHandler<AddCard>
 {
-    private IFlashCardsContext _context;
+    private readonly IFlashCardsContext _context;
 
     public AddCardHandler(IFlashCardsContext context) => _context = context;
 

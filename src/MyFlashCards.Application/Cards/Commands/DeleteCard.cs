@@ -9,7 +9,7 @@ public record DeleteCard(Guid Id) : IRequest;
 
 public class DeleteCardHandler : IRequestHandler<DeleteCard>
 {
-    private IFlashCardsContext _context;
+    private readonly IFlashCardsContext _context;
 
     public DeleteCardHandler(IFlashCardsContext context) => _context = context;
 
