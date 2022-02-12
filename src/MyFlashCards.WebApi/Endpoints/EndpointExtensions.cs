@@ -34,7 +34,7 @@ public static class EndpointExtensions
         return app;
     }
 
-    public static DelegateEndpointConventionBuilder ProducesErrorCodes(this DelegateEndpointConventionBuilder builder) =>
+    public static RouteHandlerBuilder ProducesErrorCodes(this RouteHandlerBuilder builder) =>
         builder
             .Produces(StatusCodes.Status400BadRequest, typeof(ValidationProblemDetails))
             .Produces(StatusCodes.Status401Unauthorized, typeof(ProblemDetails))
